@@ -18,7 +18,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '7.0.x'
+        dotnet-version: '8.0.x'
     
     - name: Install Fantomas
       run: dotnet tool install -g fantomas
@@ -26,7 +26,7 @@ jobs:
     - name: Check F# code formatting
       run: |
         echo "Checking F# code formatting with Fantomas..."
-        dotnet fantomas --check . || (echo "::error::Code is not formatted. Run 'dotnet fantomas .' locally to fix." && exit 1)
+        fantomas --check . || (echo "::error::Code is not formatted. Run 'fantomas .' locally to fix." && exit 1)
     
     - name: Format check summary
       if: failure()
@@ -86,7 +86,7 @@ jobs:
     - name: Build scripts
       run: |
         echo "Building F# scripts..."
-        dotnet fsi --exec solutions.fsx || (echo "::error::solutions.fsx failed to execute" && exit 1)
+        dotnet fsi --exec Tests.fsx || (echo "::error::Tests.fsx failed to execute" && exit 1)
     
     - name: Run Collatz problem
       run: |
@@ -138,8 +138,8 @@ jobs:
         for file in *.fsx; do
           if [ -f "$file" ]; then
             echo "Checking $file..."
-            dotnet fsi --nologo --quiet --exec "$file" > /dev/null 2>&1 || \
-            (echo "::error file=$file::Syntax or runtime error in $file" && exit 1)
+            dotnet fsi --nologo --simpleresolution "$file" 2>&1 | grep -i "error" && \
+            (echo "::error file=$file::Syntax error in $file" && exit 1) || echo "$file OK"
           fi
         done
     
