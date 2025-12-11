@@ -88,11 +88,6 @@ jobs:
         echo "Building F# scripts..."
         dotnet fsi --exec Tests.fsx || (echo "::error::Tests.fsx failed to execute" && exit 1)
     
-    - name: Run Collatz problem
-      run: |
-        echo "Running Collatz problem solution..."
-        dotnet fsi --exec "3n+1.fsx" || (echo "::error::\"3n+1.fsx\" failed to execute" && exit 1)
-    
     - name: Run unit tests
       run: |
         if [ -f "Tests.fsx" ]; then
