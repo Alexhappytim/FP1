@@ -40,7 +40,7 @@ module TestFramework =
             printfn "  Exception: %s" ex.Message
             Failure(expected, ex.Message)
 
-    let assertEqual (expected: 'a) (actual: 'a) name =
+    let assertEqual (expected: 'A) (actual: 'A) name =
         test name (fun () -> expected = actual) (sprintf "%A" expected) (sprintf "%A" actual)
 
     let assertTrue condition name =
@@ -71,8 +71,10 @@ module TestFramework =
 
 module Power2Tests =
     open TestFramework
+    open System.Runtime.CompilerServices
 
     // Хвостовая рекурсия
+    [<TailCall>]
     let rec sumDigitsAcc (n: bigint) (acc: int) =
         if n = bigint.Zero then
             acc
@@ -82,6 +84,7 @@ module Power2Tests =
     let sumDigits n = sumDigitsAcc n 0
 
     // Обычная рекурсия
+    [<TailCall>]
     let rec sumDigitsNonTail (n: bigint) =
         if n = bigint.Zero then
             0
@@ -90,7 +93,7 @@ module Power2Tests =
 
     // Маппинг
     let sumDigitsMap (n: bigint) =
-        n.ToString() |> Seq.map (fun c -> int c - int '0') |> Seq.sum
+        n.ToString() |> Seq.sumBy (fun c -> int c - int '0')
 
     let runTests () =
         startSuite "Power of 2 - Sum of Digits Tests"
@@ -168,8 +171,10 @@ module Power2Tests =
 
 module CollatzTests =
     open TestFramework
+    open System.Runtime.CompilerServices
 
     // Хвостовая рекурсия
+    [<TailCall>]
     let rec collatzLengthAcc (n: int64) (acc: int) : int =
         if n = 1L then acc
         elif n % 2L = 0L then collatzLengthAcc (n / 2L) (acc + 1)
@@ -178,6 +183,7 @@ module CollatzTests =
     let collatzLength n = collatzLengthAcc n 1
 
     // Обычная рекурсия
+    [<TailCall>]
     let rec collatzLengthNonTail (n: int64) : int =
         if n = 1L then 1
         elif n % 2L = 0L then 1 + collatzLengthNonTail (n / 2L)
