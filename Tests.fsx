@@ -143,9 +143,6 @@ module Power2Tests =
         assertEqual expected (Pow2Solutions.MapBased.solve ()) "Pow2 MapBased.solve = 1366"
         |> ignore
 
-        assertEqual expected (Pow2Solutions.LoopSyntax.solve ()) "Pow2 LoopSyntax.solve = 1366"
-        |> ignore
-
         assertEqual expected (Pow2Solutions.LazyInfinite.solve ()) "Pow2 LazyInfinite.solve = 1366"
         |> ignore
 
@@ -270,8 +267,6 @@ module CollatzTests =
             "Collatz MapBased length = 525"
         |> ignore
 
-        assertEqual expectedLen (CollatzSolutions.LoopSyntax.collatzLength n) "Collatz LoopSyntax.collatzLength = 525"
-        |> ignore
 
         assertEqual
             expectedLen

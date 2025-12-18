@@ -55,19 +55,6 @@ module MapBased =
         let power = bigint.Pow(bigint 2, 1000)
         let powerStr = power.ToString()
         powerStr |> Seq.map (fun c -> int c - int '0') |> Seq.sum
-// for в функциональном стиле
-module LoopSyntax =
-
-    let solve () =
-        let power = bigint.Pow(bigint 2, 1000)
-        let powerStr = power.ToString()
-
-        let mutable sum = 0
-
-        for c in powerStr do
-            sum <- sum + (int c - int '0')
-
-        sum
 
 // ленивые вычисления и бесконечные списки
 module LazyInfinite =
