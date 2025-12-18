@@ -2,9 +2,11 @@ module Pow2Solutions
 
 open System
 open System.Numerics
+open System.Runtime.CompilerServices
 
 // хвостовая
 module TailRecursive =
+    [<TailCall>]
     let rec sumDigitsAcc (n: bigint) (acc: int) =
         if n = bigint.Zero then
             acc
@@ -20,6 +22,7 @@ module TailRecursive =
 
 // рекурсия
 module NonTailRecursive =
+    [<TailCall>]
     let rec sumDigits (n: bigint) =
         if n = bigint.Zero then
             0
@@ -43,7 +46,7 @@ module Modular =
 
         generate n
 
-    let foldDigits digits = digits |> Seq.fold (+) 0
+    let foldDigits digits = digits |> Seq.sum
 
     let solve () =
         let power = bigint.Pow(bigint 2, 1000)
@@ -54,7 +57,7 @@ module MapBased =
     let solve () =
         let power = bigint.Pow(bigint 2, 1000)
         let powerStr = power.ToString()
-        powerStr |> Seq.map (fun c -> int c - int '0') |> Seq.sum
+        powerStr |> Seq.sumBy (fun c -> int c - int '0')
 
 // ленивые вычисления и бесконечные списки
 module LazyInfinite =

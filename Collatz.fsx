@@ -91,6 +91,29 @@ module MapBased =
         |> List.map (fun n -> (n, generateCollatzList (int64 n) |> List.length))
         |> List.maxBy snd
 
+// for в функциональном стиле
+module LoopSyntax =
+    let collatzLength (n: int64) =
+        let mutable current = n
+        let mutable length = 0
+
+        while current <> 1L do
+            length <- length + 1
+
+            current <-
+                if current % 2L = 0L then
+                    current / 2L
+                else
+                    3L * current + 1L
+
+        length + 1
+
+    let solve () =
+        seq {
+            for i in 1..999999 do
+                yield (i, collatzLength (int64 i))
+        }
+        |> Seq.maxBy snd
 
 // ленивые вычисления и бесконечные списки
 module LazyInfinite =

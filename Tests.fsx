@@ -1,5 +1,5 @@
-#load "pow2 1000.fsx"
-#load "3n+1.fsx"
+#load "Pow2.fsx"
+#load "Collatz.fsx"
 
 open System
 open System.Numerics
