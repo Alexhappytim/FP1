@@ -1,5 +1,5 @@
-#load "Pow2.fsx"
-#load "Collatz.fsx"
+#load "Pow2.fs"
+#load "Collatz.fs"
 
 open System
 open System.Numerics
